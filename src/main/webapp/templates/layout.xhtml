@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css"/>
+        <h:panelGroup class="logo"/>
+    </h:head>
+    <h:body>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <c:choose>
+            <c:when test="#{user.connected}">
+                <div id="content">
+                    <ui:insert name="content" />
+                </div>
+            </c:when>
+            <c:otherwise>
+                <header>
+                    <ui:include src="/includes/login.xhtml"></ui:include>
+                </header>
+            </c:otherwise>
+        </c:choose>
+
+
+    </h:body>
+</html>
+
