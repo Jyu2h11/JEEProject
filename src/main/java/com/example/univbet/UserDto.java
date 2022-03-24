@@ -11,17 +11,11 @@ public class UserDto implements Serializable {
     private String password;
     private boolean connected;
 
+
     public UserDto() {
     }
 
-    public void doLogin()
-    {
-        System.out.println("Connexion !");
-        if(this.login.equals("JyuShII") && this.password.equals("F1n@lFantasy"))
-        {
-            this.connected = true;
-        }
-    }
+
 
     public boolean isConnected() {
         return connected;
