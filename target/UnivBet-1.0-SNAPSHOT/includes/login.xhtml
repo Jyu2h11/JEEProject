@@ -1,18 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:form>
-    <h:outputLabel for="login" value="Login : " />
-    <h:inputText id="login" value="#{user.login}">
-        <f:validateRegex pattern="^[a-zA-Z]{5,32}$" for="login" />
-    </h:inputText>
-    <h:message for="login" /><br />
-    <h:outputLabel for="password" value="Mot de passe : " />
-    <h:inputSecret id="password" value="#{user.password}" >
-        <f:validateRegex pattern="^(?=.*[A-Z])(?=.*[!@#$_])(?=.*[0-9])(?=.*[a-z]).{10,32}$" for="password" />
-    </h:inputSecret>
-    <h:message for="password" /><br />
-    <h:commandButton action="#{user.doLogin()}" value="Connexion" />
-</h:form>
 
+            <h:form>
+                <h:outputLabel for="login" value="Login : " />
+                <h:inputText id="login" value="#{user.login}">
+                    <f:validateRegex pattern="^[a-zA-Z]{5,32}$" for="login" />
+                </h:inputText>
+                <h:message for="login" /><br />
+                <h:outputLabel for="password" value="Mot de passe : " />
+                <h:inputSecret id="password" value="#{user.password}" >
+                    <f:validateRegex pattern="^(?=.*[A-Z])(?=.*[!@#$_])(?=.*[0-9])(?=.*[a-z]).{10,32}$" for="password" />
+                </h:inputSecret>
+                <h:message for="password" /><br />
+                <h:commandButton action="#{user.doLogin()}" value="Connexion" />
+            </h:form>
 </html>
