@@ -15,7 +15,12 @@ public class UserDto implements Serializable {
     public UserDto() {
     }
 
-
+    public String doLogin() {
+        if(this.login.equals("Admin") && this.password.equals("Password0!")) {
+            this.connected = true;
+        }
+        return "index";
+    }
 
     public boolean isConnected() {
         return connected;
