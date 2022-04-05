@@ -11,10 +11,12 @@
     <h:outputLabel value="Hello, world"/>
     <ui:composition template="templates/layout.xhtml">
     <ui:define name="content">
+        <ui:fragment rendered="#{changeBean.pageId eq 0}">
 
-            <ui:fragment rendered="#{changeBean.pageId eq 1}">
-                <ui:include src="signup.xhtml"/>
-            </ui:fragment>
+        </ui:fragment>
+        <ui:fragment rendered="#{changeBean.pageId eq 1}">
+            <ui:include src="signup.xhtml"/>
+        </ui:fragment>
         <ui:fragment rendered="#{changeBean.pageId eq 2}">
             <ui:include src="login.xhtml"/>
         </ui:fragment>

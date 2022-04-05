@@ -1,8 +1,10 @@
 package com.example.univbet;
 
+import beans.ChangePageBean;
 import entities.UserEntity;
 import listeners.ApplicationListener;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -23,6 +25,8 @@ public class UserDto implements Serializable {
     EntityManagerFactory emf;
     EntityManager em;
     List<UserEntity> users;
+    @EJB
+    ChangePageBean changePageBean;
 
 
     public UserDto() {
@@ -46,6 +50,7 @@ public class UserDto implements Serializable {
             em.getTransaction().begin();
             em.persist(message);
             em.getTransaction().commit();
+            this.changePageBean.setPageId(0);
         }
         else
         {
@@ -67,6 +72,7 @@ public class UserDto implements Serializable {
                 em.getTransaction().begin();
                 em.persist(message);
                 em.getTransaction().commit();
+                this.changePageBean.setPageId(0);
             }
         }
     }
@@ -77,9 +83,11 @@ public class UserDto implements Serializable {
             if(this.login.equals(users.get(i).getLogin()) && this.password.equals(users.get(i).getPassword()))
             {
                 this.connected = true;
+                this.changePageBean.setPageId(0);
                 break;
             }
         }
+
 
     }
 
