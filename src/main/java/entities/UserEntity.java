@@ -3,7 +3,9 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-
+@NamedQueries({
+        @NamedQuery(name = "findAllUsers", query = "SELECT u FROM UserEntity u")
+})
 
 @Entity
 public class UserEntity {

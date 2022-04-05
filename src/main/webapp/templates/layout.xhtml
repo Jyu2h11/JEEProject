@@ -10,20 +10,14 @@
     </h:head>
     <h:body>
         <br/><br/><br/><br/><br/><br/><br/><br/>
-        <c:choose>
-            <c:when test="#{user.connected}">
+        <h:form>
+            <h:commandButton action="#{changeBean.setPageId(0)}" value="Accueil"/>
+            <h:commandButton action="#{changeBean.setPageId(1)}" value="Inscription"/>
+            <h:commandButton action="#{changeBean.setPageId(2)}" value="Connexion"/>
+        </h:form>
                 <div id="content">
                     <ui:insert name="content" />
                 </div>
-            </c:when>
-            <c:otherwise>
-                <header>
-                    <ui:include src="/includes/login.xhtml"></ui:include>
-                </header>
-            </c:otherwise>
-        </c:choose>
-
-
     </h:body>
 </html>
 

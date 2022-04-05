@@ -1,14 +1,17 @@
 package com.example.univbet;
 
 import entities.UserEntity;
+import listeners.ApplicationListener;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.xml.registry.infomodel.User;
 import java.io.Serializable;
+import java.util.List;
 
 @Named("user")
 @SessionScoped
@@ -16,30 +19,79 @@ public class UserDto implements Serializable {
     private String login;
     private String password;
     private boolean connected;
+    private boolean isPresent;
+    EntityManagerFactory emf;
+    EntityManager em;
+    List<UserEntity> users;
 
 
     public UserDto() {
     }
 
-    public String doLogin() {
-        if (this.login.equals("Admin") && this.password.equals("Password0!")) {
-            this.connected = true;
-        }
-        /*
-        Peut être à faire autre part
-         */
-        UserEntity message = new UserEntity();
-        message.setLogin(this.login);
-        message.setPassword(this.password);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(message);
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
+    public String doUnlogin()
+    {
+        this.connected = false;
         return null;
     }
+
+    public void doSignUp()
+    {
+        users = getAllUsers();
+        System.out.println("Sign up !");
+        if(users.isEmpty())
+        {
+            UserEntity message = new UserEntity();
+            message.setLogin(this.login);
+            message.setPassword(this.password);
+            em.getTransaction().begin();
+            em.persist(message);
+            em.getTransaction().commit();
+        }
+        else
+        {
+            for(int i = 0; i < users.size(); i++)
+            {
+                if(this.login.equals(users.get(i).getLogin()))
+                {
+                    this.isPresent = true;
+                    break;
+                }
+                else this.isPresent = false;
+
+            }
+            if(!this.isPresent)
+            {
+                UserEntity message = new UserEntity();
+                message.setLogin(this.login);
+                message.setPassword(this.password);
+                em.getTransaction().begin();
+                em.persist(message);
+                em.getTransaction().commit();
+            }
+        }
+    }
+
+    public void doLogin() {
+        users = getAllUsers();
+        for(int i = 0; i < users.size(); i++) {
+            if(this.login.equals(users.get(i).getLogin()) && this.password.equals(users.get(i).getPassword()))
+            {
+                this.connected = true;
+                break;
+            }
+        }
+
+    }
+
+    public List<UserEntity> getAllUsers() {
+        emf = ApplicationListener.getEmf();
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("findAllUsers",
+                    UserEntity.class);
+        List<UserEntity> users = query.getResultList();
+        return users;
+    }
+
 
 
 
