@@ -37,13 +37,13 @@ public class UserDto implements Serializable {
     public String doUnlogin()
     {
         this.connected = false;
+        this.changePageBean.setPageId(0);
         return null;
     }
 
     public void doSignUp()
     {
         users = getAllUsers();
-        System.out.println("Sign up !");
         if(users.isEmpty())
         {
             UserEntity message = new UserEntity();

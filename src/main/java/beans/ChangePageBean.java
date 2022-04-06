@@ -23,7 +23,6 @@ public class ChangePageBean{
 
     public void setPageId(int pageId) {
        this.pageId = pageId;
-        System.out.println(pageId);
     }
 
 

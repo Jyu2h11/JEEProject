@@ -14,6 +14,14 @@
             <h:commandButton action="#{changeBean.setPageId(0)}" value="Accueil"/>
             <h:commandButton action="#{changeBean.setPageId(1)}" value="Inscription"/>
             <h:commandButton action="#{changeBean.setPageId(2)}" value="Connexion"/>
+            <c:choose>
+                <c:when test="#{user.connected}">
+                    <h:commandButton action="#{user.doUnlogin()}" value="Deconnexion"/>
+                </c:when>
+                <c:otherwise>
+
+                </c:otherwise>
+            </c:choose>
         </h:form>
                 <div id="content">
                     <ui:insert name="content" />
