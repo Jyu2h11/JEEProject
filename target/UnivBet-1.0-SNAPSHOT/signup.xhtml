@@ -13,17 +13,33 @@
                 <h:outputLabel value="Vous êtes connecté, veuillez vous déconnectez pour vous ré-inscrire"/>
             </c:when>
             <c:otherwise>
+
                 <h:outputLabel for="login" value="Login : " />
                 <h:inputText id="login" value="#{user.login}">
                     <f:validateRegex pattern="^[a-zA-Z]{5,32}$" for="login" />
                 </h:inputText>
                 <h:message for="login" /><br />
+
+                <h:outputLabel for="firstname" value="Prénom : "/>
+                <h:inputText id="firstname" value="#{user.firstname}">
+                    <f:validateRegex pattern="^[a-zA-Z'-'\s]*{5,32}$" for="firstname"/>
+                </h:inputText>
+                <h:message for="firstname"/><br />
+
+                <h:outputLabel for="lastname" value="Nom : "/>
+                <h:inputText id="lastname" value="#{user.lastname}">
+                    <f:validateRegex pattern="^[a-zA-Z'-'\s]*{5,32}$"/>
+                </h:inputText>
+                <h:message for="lastname"/> <br/>
+
                 <h:outputLabel for="password" value="Mot de passe : " />
                 <h:inputSecret id="password" value="#{user.password}" >
                     <f:validateRegex pattern="^(?=.*[A-Z])(?=.*[!@#$_])(?=.*[0-9])(?=.*[a-z]).{10,32}$" for="password" />
                 </h:inputSecret>
                 <h:message for="password" /><br />
+
                 <h:commandButton action="#{user.doSignUp()}" value="Inscription" />
+
             </c:otherwise>
         </c:choose>
     </h:form>

@@ -12,7 +12,14 @@
     <ui:composition template="templates/layout.xhtml">
     <ui:define name="content">
         <ui:fragment rendered="#{changeBean.pageId eq 0}">
+            <c:choose>
+                <c:when test="#{user.connected}">
+                    <h:outputLabel value="Bonjour, #{user.firstname} #{user.lastname}"/>
+                </c:when>
+            </c:choose>
+                <c:otherwise>
 
+                </c:otherwise>
         </ui:fragment>
         <ui:fragment rendered="#{changeBean.pageId eq 1}">
             <ui:include src="signup.xhtml"/>
