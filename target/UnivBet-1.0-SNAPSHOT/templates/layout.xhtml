@@ -17,6 +17,7 @@
             <c:choose>
                 <c:when test="#{user.connected}">
                     <h:commandButton action="#{user.doUnlogin()}" value="Deconnexion"/>
+                    <h:commandButton action="#{changeBean.setPageId(3)}" value="Pronostics"/>
                 </c:when>
                 <c:otherwise>
 

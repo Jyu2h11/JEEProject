@@ -22,13 +22,13 @@
 
                 <h:outputLabel for="firstname" value="Prénom : "/>
                 <h:inputText id="firstname" value="#{user.firstname}">
-                    <f:validateRegex pattern="^[a-zA-Z'-'\s]*{5,32}$" for="firstname"/>
+                    <f:validateRegex pattern="[A-Za-zÀ-ÿ '-]*{2,32}$" for="firstname"/>
                 </h:inputText>
                 <h:message for="firstname"/><br />
 
                 <h:outputLabel for="lastname" value="Nom : "/>
                 <h:inputText id="lastname" value="#{user.lastname}">
-                    <f:validateRegex pattern="^[a-zA-Z'-'\s]*{5,32}$"/>
+                    <f:validateRegex pattern="[A-Za-zÀ-ÿ '-]*{2,32}$"/>
                 </h:inputText>
                 <h:message for="lastname"/> <br/>
 

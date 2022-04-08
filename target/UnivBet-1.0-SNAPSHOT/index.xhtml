@@ -15,7 +15,14 @@
             <c:choose>
                 <c:when test="#{user.connected}">
                     <h:outputLabel value="Bonjour, #{user.firstname} #{user.lastname}"/>
+                    <h3>Résultat du dernier match</h3>
+                    <h3>Prochain match à venir</h3>
+                    <h3>Classement de la ligue à laquelle vous appartenez</h3>
                 </c:when>
+                <c:otherwise>
+                    <h3>Résultat des 3 derniers matchs</h3>
+                    <h3>3 prochains matchs à venir</h3>
+                </c:otherwise>
             </c:choose>
                 <c:otherwise>
 
@@ -27,8 +34,9 @@
         <ui:fragment rendered="#{changeBean.pageId eq 2}">
             <ui:include src="login.xhtml"/>
         </ui:fragment>
-
-
+        <ui:fragment rendered="#{changeBean.pageId eq 3}">
+            <ui:include src="pronostics.xhtml"/>
+        </ui:fragment>
 
     </ui:define>
     </ui:composition>

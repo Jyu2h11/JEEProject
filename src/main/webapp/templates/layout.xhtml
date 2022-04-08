@@ -16,6 +16,7 @@
             <h:commandButton action="#{changeBean.setPageId(2)}" value="Connexion"/>
             <c:choose>
                 <c:when test="#{user.connected}">
+                    <h:commandButton action="#{changeBean.setPageId(3)}" value="Pronostics"/>
                     <h:commandButton action="#{user.doUnlogin()}" value="Deconnexion"/>
                 </c:when>
                 <c:otherwise>
