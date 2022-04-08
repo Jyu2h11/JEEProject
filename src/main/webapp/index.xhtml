@@ -18,15 +18,24 @@
                     <h3>Résultat du dernier match</h3>
                     <h3>Prochain match à venir</h3>
                     <h3>Classement de la ligue à laquelle vous appartenez</h3>
+                    <c:choose>
+                        <c:when test="#{ligue.userPresentInLigue}">
+                            <h:outputLabel value="Vous êtes inscrit à une ligue" />
+                        </c:when>
+                        <c:otherwise>
+                            <h:form>
+                                <h:commandButton action="#{ligue.addLigue()}" value="Ajouter une ligue lol" >
+                                </h:commandButton>
+                            </h:form>
+                        </c:otherwise>
+                    </c:choose>
+
                 </c:when>
                 <c:otherwise>
                     <h3>Résultat des 3 derniers matchs</h3>
                     <h3>3 prochains matchs à venir</h3>
                 </c:otherwise>
             </c:choose>
-                <c:otherwise>
-
-                </c:otherwise>
         </ui:fragment>
         <ui:fragment rendered="#{changeBean.pageId eq 1}">
             <ui:include src="signup.xhtml"/>

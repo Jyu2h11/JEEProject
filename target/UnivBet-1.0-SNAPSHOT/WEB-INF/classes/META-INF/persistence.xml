@@ -6,6 +6,8 @@
 
     <persistence-unit name="default">
         <class>entities.UserEntity</class>
+        <class>entities.LigueEntity</class>
+        <class>entities.UserHasLigueEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/timergame"/>

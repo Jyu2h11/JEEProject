@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Failing with style B)</title>
         <h:outputStylesheet library="css" name="styles.css"/>
@@ -11,13 +12,19 @@
     <h:body>
         <br/><br/><br/><br/><br/><br/><br/><br/>
         <h:form>
-            <h:commandButton action="#{changeBean.setPageId(0)}" value="Accueil"/>
+            <h:commandButton action="#{changeBean.setPageId(0)}" value="Accueil">
+                <c:choose>
+                    <c:when test="#{user.connected}">
+                        <f:actionListener binding="#{ligue.setUserPresentInLigue()}"/>
+                    </c:when>
+                </c:choose>
+            </h:commandButton>
             <h:commandButton action="#{changeBean.setPageId(1)}" value="Inscription"/>
             <h:commandButton action="#{changeBean.setPageId(2)}" value="Connexion"/>
             <c:choose>
                 <c:when test="#{user.connected}">
-                    <h:commandButton action="#{user.doUnlogin()}" value="Deconnexion"/>
                     <h:commandButton action="#{changeBean.setPageId(3)}" value="Pronostics"/>
+                    <h:commandButton action="#{user.doUnlogin()}" value="Deconnexion"/>
                 </c:when>
                 <c:otherwise>
 

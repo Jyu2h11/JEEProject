@@ -1,5 +1,7 @@
 package entities;
 
+import jdk.jfr.Name;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +26,8 @@ public class UserEntity {
 
     @NotNull
     private String password;
+
+
 
 
     public String getLastname() {

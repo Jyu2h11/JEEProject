@@ -1,6 +1,7 @@
 package com.example.univbet;
 
 import beans.ChangePageBean;
+import beans.UserBean;
 import entities.UserEntity;
 import listeners.ApplicationListener;
 
@@ -18,17 +19,14 @@ import java.util.List;
 @Named("user")
 @SessionScoped
 public class UserDto implements Serializable {
-    private String login;
-    private String firstname;
-    private String lastname;
-    private String password;
-    private boolean connected;
     private boolean isPresent;
     EntityManagerFactory emf;
     EntityManager em;
     List<UserEntity> users;
     @EJB
     ChangePageBean changePageBean;
+    @EJB
+    UserBean userBean;
 
 
     public UserDto() {
@@ -36,7 +34,7 @@ public class UserDto implements Serializable {
 
     public String doUnlogin()
     {
-        this.connected = false;
+        this.userBean.setConnected(false);
         this.changePageBean.setPageId(0);
         return null;
     }
@@ -47,10 +45,10 @@ public class UserDto implements Serializable {
         if(users.isEmpty())
         {
             UserEntity message = new UserEntity();
-            message.setLogin(this.login);
-            message.setFirstname(this.firstname);
-            message.setLastname(this.lastname);
-            message.setPassword(this.password);
+            message.setLogin(this.userBean.getLogin());
+            message.setFirstname(this.userBean.getFirstName());
+            message.setLastname(this.userBean.getLastName());
+            message.setPassword(this.userBean.getPassword());
             em.getTransaction().begin();
             em.persist(message);
             em.getTransaction().commit();
@@ -60,7 +58,7 @@ public class UserDto implements Serializable {
         {
             for(int i = 0; i < users.size(); i++)
             {
-                if(this.login.equals(users.get(i).getLogin()))
+                if(this.userBean.getLogin().equals(users.get(i).getLogin()))
                 {
                     this.isPresent = true;
                     break;
@@ -71,10 +69,10 @@ public class UserDto implements Serializable {
             if(!this.isPresent)
             {
                 UserEntity message = new UserEntity();
-                message.setLogin(this.login);
-                message.setFirstname(this.firstname);
-                message.setLastname(this.lastname);
-                message.setPassword(this.password);
+                message.setLogin(this.userBean.getLogin());
+                message.setFirstname(this.userBean.getFirstName());
+                message.setLastname(this.userBean.getLastName());
+                message.setPassword(this.userBean.getPassword());
                 em.getTransaction().begin();
                 em.persist(message);
                 em.getTransaction().commit();
@@ -86,12 +84,12 @@ public class UserDto implements Serializable {
     public void doLogin() {
         users = getAllUsers();
         for(int i = 0; i < users.size(); i++) {
-            if(this.login.equals(users.get(i).getLogin()) && this.password.equals(users.get(i).getPassword()))
+            if(this.userBean.getLogin().equals(users.get(i).getLogin()) && this.userBean.getPassword().equals(users.get(i).getPassword()))
             {
-                this.login = users.get(i).getLogin();
-                this.firstname = users.get(i).getFirstname();
-                this.lastname = users.get(i).getLastname();
-                this.connected = true;
+                this.userBean.setLogin(users.get(i).getLogin());
+                this.userBean.setFirstName(users.get(i).getFirstname());
+                this.userBean.setLastName(users.get(i).getLastname());
+                this.userBean.setConnected(true);
                 this.changePageBean.setPageId(0);
                 break;
             }
@@ -113,43 +111,43 @@ public class UserDto implements Serializable {
 
 
     public boolean isConnected() {
-        return connected;
+        return this.userBean.isConnected();
     }
 
     public void setConnected(boolean connected) {
-        this.connected = connected;
+        this.userBean.setConnected(connected);
     }
 
     public String getLogin() {
-        return login;
+        return this.userBean.getLogin();
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.userBean.setLogin(login);
     }
 
     public String getPassword() {
-        return password;
+        return this.userBean.getPassword();
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.userBean.setPassword(password);
     }
 
     public String getFirstname() {
-        return firstname;
+        return this.userBean.getFirstName();
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.userBean.setFirstName(firstname);
     }
 
     public String getLastname() {
-        return lastname;
+        return this.userBean.getLastName();
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.userBean.setLastName(lastname);
     }
 
 }
