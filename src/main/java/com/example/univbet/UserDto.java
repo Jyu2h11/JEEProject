@@ -1,6 +1,7 @@
 package com.example.univbet;
 
 import beans.ChangePageBean;
+import beans.LigueBean;
 import beans.UserBean;
 import entities.UserEntity;
 import listeners.ApplicationListener;
@@ -27,6 +28,8 @@ public class UserDto implements Serializable {
     ChangePageBean changePageBean;
     @EJB
     UserBean userBean;
+    @EJB
+    LigueBean ligueBean;
 
 
     public UserDto() {
@@ -36,6 +39,7 @@ public class UserDto implements Serializable {
     {
         this.userBean.setConnected(false);
         this.changePageBean.setPageId(0);
+        this.ligueBean.setUserPresentInLigue(false);
         return null;
     }
 
@@ -90,6 +94,7 @@ public class UserDto implements Serializable {
                 this.userBean.setFirstName(users.get(i).getFirstname());
                 this.userBean.setLastName(users.get(i).getLastname());
                 this.userBean.setConnected(true);
+                this.ligueBean.verifyUserHasLiguePresent();
                 this.changePageBean.setPageId(0);
                 break;
             }

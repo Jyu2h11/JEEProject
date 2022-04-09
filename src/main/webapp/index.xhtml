@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:jsp="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <f:view>
     <h:outputLabel value="Hello, world"/>
@@ -24,7 +24,9 @@
                         </c:when>
                         <c:otherwise>
                             <h:form>
+                                <h:inputText value="#{ligue.nomLigue}" a:placeholder="Nom de ligue..."/>
                                 <h:commandButton action="#{ligue.addLigue()}" value="Ajouter une ligue lol" >
+                                    <f:actionListener binding="#{ligue.setUserPresentInLigue()}"/>
                                 </h:commandButton>
                             </h:form>
                         </c:otherwise>
