@@ -16,6 +16,10 @@ import java.util.List;
 public class LigueBean {
 
     private String nomLigue;
+    private String nomLigue2;
+
+
+
     EntityManagerFactory emf;
     EntityManager em;
     List<LigueEntity> ligues;
@@ -57,6 +61,7 @@ public class LigueBean {
             if(this.currentUser.getLogin().equals(getAllUserHasLigues().get(i).getLogin()))
             {
                 setUserPresentInLigue(true);
+                System.out.println(getLigueNameOfUserList());
                 break;
             }
             else setUserPresentInLigue(false);
@@ -88,12 +93,39 @@ public class LigueBean {
         return ligues;
     }
 
+    public List<String> getAllLiguesName()
+    {
+        Query query = em.createQuery("SELECT l.nomLigue FROM LigueEntity l", String.class);
+        List<String> liguesName = query.getResultList();
+        return liguesName;
+    }
+
+    public List<String> getLigueNameOfUserList()
+    {
+        List<Long> userIdList = getCurrentUserId();
+        Long userId = userIdList.get(0);
+        Query query = em.createQuery("SELECT l.nomLigue FROM LigueEntity l, UserHasLigueEntity ul, UserEntity u WHERE u.id = " + userId + " and l.id = ul.ligueEntity.id and ul.userEntity.id = u.id",
+                String.class);
+        List<String> ligueNameOfUser = query.getResultList();
+        return ligueNameOfUser;
+    }
+
+
+
     public String getNomLigue() {
         return nomLigue;
     }
 
     public void setNomLigue(String nomLigue) {
         this.nomLigue = nomLigue;
+    }
+
+    public String getNomLigue2() {
+        return nomLigue2;
+    }
+
+    public void setNomLigue2(String nomLigue2) {
+        this.nomLigue2 = nomLigue2;
     }
 
     public EntityManagerFactory getEmf() {

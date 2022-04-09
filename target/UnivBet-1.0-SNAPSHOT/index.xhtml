@@ -20,14 +20,28 @@
                     <h3>Classement de la ligue à laquelle vous appartenez</h3>
                     <c:choose>
                         <c:when test="#{ligue.userPresentInLigue}">
-                            <h:outputLabel value="Vous êtes inscrit à une ligue" />
+                            <h:outputLabel value="Vous êtes inscrit à la ligue suivante : #{ligue.getLigueNameOfUser()}" />
                         </c:when>
                         <c:otherwise>
                             <h:form>
+                                <h:outputLabel value="Si vous souhaitez créer votre propre ligue, veuillez renseigner son nom ci-dessous"/>
+                                <br/>
                                 <h:inputText value="#{ligue.nomLigue}" a:placeholder="Nom de ligue..."/>
-                                <h:commandButton action="#{ligue.addLigue()}" value="Ajouter une ligue lol" >
+                                <h:commandButton action="#{ligue.addLigue()}" value="Créer une ligue" >
                                     <f:actionListener binding="#{ligue.setUserPresentInLigue()}"/>
                                 </h:commandButton>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <h:outputLabel value="Sinon, vous pouvez rejoindre une ligue déjà existante (NE PAS REMPLIR LE CHAMP DE CREATION DE LIGUE SI VOUS SOUHAITEZ REJOINDRE UNE LIGUE SOUS PEINE DE BUG)" />
+                                <br/>
+                                <h:selectOneMenu value="#{ligue.nomLigue2}">
+                                    <f:selectItems value="#{ligue.getAllLiguesName()}"/>
+                                </h:selectOneMenu>
+                                <h:commandButton action="#{ligue.addLigue2()}" value="Rejoindre une ligue" >
+                                    <f:actionListener binding="#{ligue.setUserPresentInLigue()}"/>
+                                </h:commandButton>
+
                             </h:form>
                         </c:otherwise>
                     </c:choose>
@@ -48,7 +62,9 @@
         <ui:fragment rendered="#{changeBean.pageId eq 3}">
             <ui:include src="pronostics.xhtml"/>
         </ui:fragment>
-
+        <ui:fragment rendered="#{changeBean.pageId eq 4}">
+            <ui:include src="administration.xhtml"></ui:include>
+        </ui:fragment>
     </ui:define>
     </ui:composition>
 </f:view>

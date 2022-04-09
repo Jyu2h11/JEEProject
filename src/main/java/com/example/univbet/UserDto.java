@@ -3,6 +3,8 @@ package com.example.univbet;
 import beans.ChangePageBean;
 import beans.LigueBean;
 import beans.UserBean;
+import com.mysql.cj.log.Log;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import entities.UserEntity;
 import listeners.ApplicationListener;
 
@@ -53,6 +55,7 @@ public class UserDto implements Serializable {
             message.setFirstname(this.userBean.getFirstName());
             message.setLastname(this.userBean.getLastName());
             message.setPassword(this.userBean.getPassword());
+            message.setPrivilege(false);
             em.getTransaction().begin();
             em.persist(message);
             em.getTransaction().commit();
@@ -110,6 +113,21 @@ public class UserDto implements Serializable {
                     UserEntity.class);
         List<UserEntity> users = query.getResultList();
         return users;
+    }
+
+    public List<Boolean> getUsersPrivilege()
+    {
+        emf = ApplicationListener.getEmf();
+        em = emf.createEntityManager();
+        Long userId = this.ligueBean.getCurrentUserId().get(0);
+        Query query = em.createQuery("SELECT u.privilege FROM UserEntity u WHERE u.id = "  + userId, Boolean.class);
+        List<Boolean> usersId = query.getResultList();
+        return usersId;
+    }
+
+    public boolean getUserPrivilege()
+    {
+        return getUsersPrivilege().get(0);
     }
 
 

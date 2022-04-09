@@ -43,16 +43,46 @@ public class LigueAndUserDto implements Serializable {
         {
             for(int i = 0; i < this.currentLigue.getLigues().size(); i++)
             {
-                if(this.currentLigue.getNomLigue().equals(this.currentLigue.getLigues().get(i).getNomLigue()))
+                    if(getNomLigue().equals(this.currentLigue.getLigues().get(i).getNomLigue()))
+                    {
+                        this.isPresent = true;
+                        break;
+                    }
+                    else this.isPresent = false;
+                }
+
+            if(!this.isPresent)
+            {
+               createLigueInDatabase();
+            }
+        }
+        linkUserAndLigue();
+        this.currentLigue.setUserPresentInLigue();
+
+    }
+
+    public void addLigue2()
+    {
+        this.emf = this.currentLigue.getEmf();
+        this.em = this.currentLigue.getEm();
+        if(this.currentLigue.getLigues().isEmpty()) {
+            createLigueInDatabase();
+        }
+        else
+        {
+            for(int i = 0; i < this.currentLigue.getLigues().size(); i++)
+            {
+                if(getNomLigue2().equals(this.currentLigue.getLigues().get(i).getNomLigue()))
                 {
                     this.isPresent = true;
                     break;
                 }
                 else this.isPresent = false;
             }
+
             if(!this.isPresent)
             {
-               createLigueInDatabase();
+                createLigueInDatabase();
             }
         }
         linkUserAndLigue();
@@ -72,7 +102,8 @@ public class LigueAndUserDto implements Serializable {
             userEntity.setPassword(this.currentUser.getPassword());
             userEntity.setId(this.currentLigue.getCurrentUserId().get(0));
             LigueEntity ligueEntity = new LigueEntity();
-            ligueEntity.setNomLigue(this.currentLigue.getNomLigue());
+            if(getNomLigue().isEmpty()) ligueEntity.setNomLigue(getNomLigue2());
+            else ligueEntity.setNomLigue(getNomLigue());
             ligueEntity.setId(getCurrentLigueId().get(0));
             message.setUserEntity(userEntity);
             message.setLigueEntity(ligueEntity);
@@ -90,7 +121,8 @@ public class LigueAndUserDto implements Serializable {
                 userEntity.setPassword(this.currentUser.getPassword());
                 userEntity.setId(this.currentLigue.getCurrentUserId().get(0));
                 LigueEntity ligueEntity = new LigueEntity();
-                ligueEntity.setNomLigue(this.currentLigue.getNomLigue());
+                if(getNomLigue().isEmpty()) ligueEntity.setNomLigue(getNomLigue2());
+                else ligueEntity.setNomLigue(getNomLigue());
                 ligueEntity.setId(getCurrentLigueId().get(0));
                 message.setUserEntity(userEntity);
                 message.setLigueEntity(ligueEntity);
@@ -105,7 +137,12 @@ public class LigueAndUserDto implements Serializable {
 
     private void createLigueInDatabase() {
         LigueEntity message = new LigueEntity();
-        message.setNomLigue(this.currentLigue.getNomLigue());
+        if(getNomLigue().isEmpty())
+        {
+            message.setNomLigue(getNomLigue2());
+        }
+        else message.setNomLigue(getNomLigue());
+
         em.getTransaction().begin();
         em.persist(message);
         em.getTransaction().commit();
@@ -115,14 +152,28 @@ public class LigueAndUserDto implements Serializable {
         return this.currentLigue.getNomLigue();
     }
 
+    public String getNomLigue2()
+    {
+        return this.currentLigue.getNomLigue2();
+    }
 
+    public List<String> getAllLiguesName()
+    {
+       return this.currentLigue.getAllLiguesName();
+    }
 
     public List<Long> getCurrentLigueId()
     {
-        Query query = em.createQuery("SELECT l.id FROM LigueEntity l WHERE l.nomLigue = '" + this.currentLigue.getNomLigue() + "'",
-                Long.class);
+        Query query = null;
+        if(getNomLigue().isEmpty())  query = em.createQuery("SELECT l.id FROM LigueEntity l WHERE l.nomLigue = '" + this.currentLigue.getNomLigue2() + "'", Long.class);
+        else query = em.createQuery("SELECT l.id FROM LigueEntity l WHERE l.nomLigue = '" + this.currentLigue.getNomLigue() + "'", Long.class);
         List<Long> ligueId = query.getResultList();
         return ligueId;
+    }
+
+    public String getLigueNameOfUser()
+    {
+        return this.currentLigue.getLigueNameOfUserList().get(0);
     }
 
 
@@ -138,6 +189,11 @@ public class LigueAndUserDto implements Serializable {
 
     public void setNomLigue(String nomLigue) {
         this.currentLigue.setNomLigue(nomLigue);
+    }
+
+    public void setNomLigue2(String nomLigue2) {
+        this.currentLigue.setNomLigue2(nomLigue2);
+
     }
 
 }

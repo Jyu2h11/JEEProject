@@ -27,8 +27,16 @@ public class UserEntity {
     @NotNull
     private String password;
 
+    @NotNull
+    private boolean privilege;
 
+    public boolean isPrivilege() {
+        return privilege;
+    }
 
+    public void setPrivilege(boolean privilege) {
+        this.privilege = privilege;
+    }
 
     public String getLastname() {
         return lastname;
