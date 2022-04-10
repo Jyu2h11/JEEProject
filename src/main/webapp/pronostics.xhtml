@@ -7,6 +7,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h2>Liste des matchs à venir</h2>
-
+    <ul>
+    <ui:repeat value="#{match.displayAllMatchs()}" var="t">
+        <li>#{t}</li>
+    </ui:repeat>
+    </ul>
 </f:view>
 </html>

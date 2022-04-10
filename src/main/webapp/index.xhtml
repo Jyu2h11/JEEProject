@@ -16,7 +16,9 @@
                 <c:when test="#{user.connected}">
                     <h:outputLabel value="Bonjour, #{user.firstname} #{user.lastname}"/>
                     <h3>Résultat du dernier match</h3>
+                    <h:outputText value="#{match.getLastMatchOver()}"/>
                     <h3>Prochain match à venir</h3>
+                    <h:outputText value="#{match.getNextMatch()}"/>
                     <h3>Classement de la ligue à laquelle vous appartenez</h3>
                     <c:choose>
                         <c:when test="#{ligue.userPresentInLigue}">
@@ -49,7 +51,15 @@
                 </c:when>
                 <c:otherwise>
                     <h3>Résultat des 3 derniers matchs</h3>
+                    <ui:repeat var="item" value="#{match.get3LastMatchOver()}" varStatus="loop">
+                        #{item}
+                        <br/>
+                    </ui:repeat>
                     <h3>3 prochains matchs à venir</h3>
+                    <ui:repeat var="item" value="#{match.get3LastMatchToGo()}" varStatus="loop">
+                        #{item}
+                        <br/>
+                    </ui:repeat>
                 </c:otherwise>
             </c:choose>
         </ui:fragment>

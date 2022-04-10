@@ -4,8 +4,51 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:a="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://java.sun.com/jsf/core">
 <f:view>
     <h2>Administration</h2>
+    <h:form>
+
+        <h:inputText value="#{equipe.nomEquipe}" a:placeholder="Nom d'équipe..."/>
+        <h:commandButton action="#{equipe.createEquipe()}" value="Créer une équipe" />
+        <br/>
+        <h2>Liste des équipes : </h2>
+        <ul>
+        <ui:repeat value="#{equipe.equipesName}" var="t">
+            <li>#{t}</li>
+        </ui:repeat>
+        </ul>
+        <c:choose>
+            <c:when test="#{equipe.canCreateMatch}">
+                <h2>Création de match :</h2>
+                <h:selectOneMenu value="#{equipe.equipeNameVS1}">
+                    <f:selectItems value="#{equipe.getAllEquipesName()}"/>
+                </h:selectOneMenu>
+                <p>VS</p>
+                <h:selectOneMenu value="#{equipe.equipeNameVS2}">
+                    <f:selectItems value="#{equipe.getAllEquipesName()}"/>
+                </h:selectOneMenu>
+                <br/>
+                <br/>
+                <h:commandButton value="Créer un match" action="#{match.addMatch()}"/>
+                <h2>Validation d'un match :</h2>
+                <ul>
+                    <ui:repeat var="item" value="#{match.displayAllMatchs()}" varStatus="loop">
+                        #{item}
+                        <c:set var="index" value="${loop.index}" />
+                        <c:set var="index" value="${index + 1}" />
+                        index : #{index}
+                        <h:inputText value="#{match.toAdd}" a:placeholder="Résultat du match"/>
+                        <h:commandButton value="Valider match" action="#{match.validateMatch(item)}">
+                            <f:actionListener binding="#{match.addInResult(match.toAdd)}"/>
+                        </h:commandButton>
+                        <br/>
+                    </ui:repeat>
+                </ul>
+            </c:when>
+        </c:choose>
+
+    </h:form>
 </f:view>
 </html>
